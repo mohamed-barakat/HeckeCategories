@@ -38,7 +38,7 @@ To obtain current versions of all dependencies, `git clone` (or `git pull` to up
 [tests-url]: https://github.com/homalg-project/HeckeCategories/actions/workflows/Tests.yml?query=branch%3Amaster
 
 [codecov-img]: https://codecov.io/gh/homalg-project/HeckeCategories/branch/master/graph/badge.svg
-[codecov-url]: https://codecov.io/gh/homalg-project/HeckeCategories
+[codecov-url]: https://app.codecov.io/gh/homalg-project/HeckeCategories
 
 [code-img]: https://img.shields.io/badge/-View%20code-blue?logo=github
 [code-url]: https://github.com/homalg-project/HeckeCategories#top
