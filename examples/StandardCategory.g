@@ -87,7 +87,7 @@ zeta_xy := MorphismConstructor( rx, a1*a2, ry );
 IsZero( zeta_xy );
 #! true
 IsEqualForMorphisms( zero_xy, zeta_xy );
-#! false
+#! true
 IsCongruentForMorphisms( zero_xy, zeta_xy );
 #! true
 eta_x := a3 * phi_x;

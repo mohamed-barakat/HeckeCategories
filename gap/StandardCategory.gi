@@ -72,11 +72,18 @@ InstallMethodWithCache( StandardCategory,
     
     AddMorphismConstructor( Std,
       function( cat, source, ring_element, range )
+        local datum;
+        
+        if IsEqualForObjects( cat, source, range ) then
+            datum := ring_element;
+        else
+            datum := Zero( ring_element );
+        fi;
         
         return CreateCapCategoryMorphismWithAttributes( cat,
                        source,
                        range,
-                       UnderlyingRingElement, ring_element );
+                       UnderlyingRingElement, datum );
         
     end );
     
