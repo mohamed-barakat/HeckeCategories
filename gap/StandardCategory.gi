@@ -217,7 +217,7 @@ InstallMethodWithCache( StandardCategory,
         return MorphismConstructor( cat,
                        TensorProductOnObjects( cat, Source( mor1 ), Source( mor2 ) ),
                        MorphismDatum( cat, mor1 ) * Pullback( phi_x, MorphismDatum( cat, mor2 ) ),
-                       TensorProductOnObjects( cat, Range( mor1 ), Source( mor2 ) ) );
+                       TensorProductOnObjects( cat, Range( mor1 ), Range( mor2 ) ) );
         
     end );
     
