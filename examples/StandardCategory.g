@@ -13,7 +13,7 @@ Std := StandardCategory( W, k );
 Display( Std );
 #! A CAP category with name StandardCategory( W, Q ):
 #! 
-#! 20 primitive operations were used to derive 79 operations for this category
+#! 20 primitive operations were used to derive 80 operations for this category
 #! which algorithmically
 #! * IsEquippedWithHomomorphismStructure
 #! * IsLinearCategoryOverCommutativeRing
