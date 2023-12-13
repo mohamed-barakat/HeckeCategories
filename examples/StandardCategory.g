@@ -16,7 +16,7 @@ Display( Std );
 #! 20 primitive operations were used to derive 81 operations for this category
 #! which algorithmically
 #! * IsEquippedWithHomomorphismStructure
-#! * IsLinearCategoryOverCommutativeRing
+#! * IsLinearCategoryOverCommutativeRingWithFinitelyGeneratedFreeExternalHoms
 #! * IsMonoidalCategory
 #! and furthermore mathematically
 #! * IsStrictMonoidalCategory
