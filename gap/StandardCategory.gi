@@ -47,7 +47,7 @@ InstallMethodWithCache( StandardCategory,
     V := CategoryOfRows( R );
     
     SetIsAbCategory( Std, true );
-    SetIsLinearCategoryOverCommutativeRing( Std, true );
+    SetIsLinearCategoryOverCommutativeRingWithFinitelyGeneratedFreeExternalHoms( Std, true );
     SetCommutativeRingOfLinearCategory( Std, R );
     
     SetRangeCategoryOfHomomorphismStructure( Std, V );
