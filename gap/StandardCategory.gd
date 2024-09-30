@@ -59,6 +59,10 @@ DeclareAttribute( "UnderlyingMatrixGroup",
 DeclareAttribute( "UnderlyingRing",
         IsStandardCategory );
 
+#!
+DeclareAttribute( "UnderlyingFieldOfFractions",
+        IsStandardCategory );
+
 CapJitAddTypeSignature( "UnderlyingRing", [ IsStandardCategory ], IsHomalgRing );
 
 #!

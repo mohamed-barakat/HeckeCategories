@@ -9,18 +9,24 @@ InstallMethodWithCache( StandardCategory,
         [ IsMatrixGroup, IsHomalgRing ],
         
   function( W, k )
-    local d, vars_a, R, phi, name, Std, V;
+    local d, vars_a, R, Q, phi, name, Std, V;
     
     d := Rank( One( W ) );
     
     vars_a := Concatenation( "a1..", String( d ) );
     
     R := k[vars_a];
+    Q := HomalgFieldOfRationalsInSingular( vars_a, k );
     
     phi :=
       function( w )
+        local map;
         
-        return RingMap( w * Indeterminates( R ), R, R );
+        map := RingMap( w * Indeterminates( R ), R, R );
+        
+        SetIsMorphism( map, true );
+        
+        return map;
         
     end;
     
@@ -40,6 +46,7 @@ InstallMethodWithCache( StandardCategory,
     
     SetUnderlyingMatrixGroup( Std, W );
     SetUnderlyingRing( Std, R );
+    SetUnderlyingFieldOfFractions( Std, Q );
     SetUnderlyingTwistingRingMap( Std, phi );
     
     Std!.category_as_first_argument := true;
@@ -48,7 +55,7 @@ InstallMethodWithCache( StandardCategory,
     
     SetIsAbCategory( Std, true );
     SetIsLinearCategoryOverCommutativeRingWithFinitelyGeneratedFreeExternalHoms( Std, true );
-    SetCommutativeRingOfLinearCategory( Std, R );
+    SetCommutativeRingOfLinearCategory( Std, Q );
     
     SetRangeCategoryOfHomomorphismStructure( Std, V );
     SetIsEquippedWithHomomorphismStructure( Std, true );
@@ -104,7 +111,7 @@ InstallMethodWithCache( StandardCategory,
     AddIsWellDefinedForMorphisms( Std,
       function( cat, mor )
         
-        return MorphismDatum( cat, mor ) in UnderlyingRing( cat );
+        return MorphismDatum( cat, mor ) in UnderlyingFieldOfFractions( cat );
         
     end );
     
@@ -148,7 +155,7 @@ InstallMethodWithCache( StandardCategory,
         
         return MorphismConstructor( cat,
                        rx,
-                       One( UnderlyingRing( cat ) ),
+                       One( UnderlyingFieldOfFractions( cat ) ),
                        rx );
         
     end );
@@ -178,7 +185,7 @@ InstallMethodWithCache( StandardCategory,
         
         return MorphismConstructor( cat,
                        rx,
-                       Zero( UnderlyingRing( cat ) ),
+                       Zero( UnderlyingFieldOfFractions( cat ) ),
                        ry );
         
     end );
@@ -210,13 +217,18 @@ InstallMethodWithCache( StandardCategory,
     
     AddTensorProductOnMorphisms( Std,
       function( cat, mor1, mor2 )
-        local phi_x;
+        local mor2_datum, phi_x, R, Q;
+        
+        mor2_datum := MorphismDatum( cat, mor2 );
         
         phi_x := UnderlyingTwistingRingMap( cat )( ObjectDatum( cat, Range( mor1 ) )^-1 );
         
+        R := UnderlyingRing( cat );
+        Q := UnderlyingFieldOfFractions( cat );
+        
         return MorphismConstructor( cat,
                        TensorProductOnObjects( cat, Source( mor1 ), Source( mor2 ) ),
-                       MorphismDatum( cat, mor1 ) * Pullback( phi_x, MorphismDatum( cat, mor2 ) ),
+                       MorphismDatum( cat, mor1 ) * ( ( Pullback( phi_x, Numerator( mor2_datum ) / R ) / Q ) / ( Pullback( phi_x, Denominator( mor2_datum ) / R ) / Q ) ),
                        TensorProductOnObjects( cat, Range( mor1 ), Range( mor2 ) ) );
         
     end );
@@ -247,6 +259,7 @@ InstallMethodWithCache( StandardCategory,
       rec( category_attribute_names :=
            [ "UnderlyingMatrixGroup",
              "UnderlyingRing",
+             "UnderlyingFieldOfFractions",
              "UnderlyingTwistingRingMap",
              ] );
     
