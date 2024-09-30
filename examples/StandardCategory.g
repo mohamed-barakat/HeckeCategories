@@ -20,9 +20,9 @@ Display( Std );
 #! * IsMonoidalCategory
 #! and furthermore mathematically
 #! * IsStrictMonoidalCategory
-R := UnderlyingRing( Std );
-#! Q[a1,a2,a3]
-ExportVariables( R );
+Q := UnderlyingFieldOfFractions( Std );
+#! Q(a1,a2,a3)
+ExportVariables( Q );
 #! [ a1, a2, a3 ]
 x := [[0,1,0],[1,0,0],[0,0,1]];
 #! [ [ 0, 1, 0 ], [ 1, 0, 0 ], [ 0, 0, 1 ] ]
@@ -59,13 +59,13 @@ phi_x := MorphismConstructor( rx, a1 * a2, rx );
 IsWellDefined( phi_x );
 #! true
 Display( phi_x );
-#! a1*a2
+#! (a1*a2)
 IsOne( phi_x );
 #! false
 Display( 2 * a1 * phi_x );
-#! 2*a1^2*a2
+#! (2*a1^2*a2)
 Display( -phi_x );
-#! -a1*a2
+#! (-a1*a2)
 psi_x := MorphismConstructor( rx, a2 * a1, rx );
 #! <A morphism in StandardCategory( W, Q )>
 phi_x = psi_x;
@@ -73,7 +73,7 @@ phi_x = psi_x;
 Display( phi_x - psi_x );
 #! 0
 Display( PreCompose( phi_x, psi_x ) );
-#! a1^2*a2^2
+#! (a1^2*a2^2)
 phi_y := MorphismConstructor( ry, a2 * a3, ry );
 #! <A morphism in StandardCategory( W, Q )>
 phi_x = phi_y;
@@ -93,13 +93,13 @@ IsCongruentForMorphisms( zero_xy, zeta_xy );
 eta_x := a3 * phi_x;
 #! <A morphism in StandardCategory( W, Q )>
 Display( eta_x );
-#! a1*a2*a3
+#! (a1*a2*a3)
 end_x := BasisOfExternalHom( rx, rx );
 #! [ <An identity morphism in StandardCategory( W, Q )> ]
 Display( end_x[1] );
 #! 1
 CoefficientsOfMorphism( eta_x );
-#! [ a1*a2*a3 ]
+#! [ (a1*a2*a3) ]
 BasisOfExternalHom( rx, ry );
 #! [ ]
 CoefficientsOfMorphism( zeta_xy );
@@ -113,5 +113,5 @@ Display( I );
 chi_xy := TensorProduct( phi_x, phi_y );
 #! <A morphism in StandardCategory( W, Q )>
 Display( chi_xy );
-#! a1^2*a2*a3
+#! (a1^2*a2*a3)
 #! @EndExample
