@@ -212,7 +212,7 @@ InstallMethodWithCache( StandardCategory,
       function( cat, mor1, mor2 )
         local phi_x;
         
-        phi_x := UnderlyingTwistingRingMap( cat )( ObjectDatum( cat, Range( mor1 ) ) );
+        phi_x := UnderlyingTwistingRingMap( cat )( ObjectDatum( cat, Range( mor1 ) )^-1 );
         
         return MorphismConstructor( cat,
                        TensorProductOnObjects( cat, Source( mor1 ), Source( mor2 ) ),
