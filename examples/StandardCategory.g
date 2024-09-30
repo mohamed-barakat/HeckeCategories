@@ -20,9 +20,9 @@ Display( Std );
 #! * IsMonoidalCategory
 #! and furthermore mathematically
 #! * IsStrictMonoidalCategory
-R := UnderlyingRing( Std );
-#! Q[a1,a2,a3]
-ExportVariables( R );
+Q := UnderlyingFieldOfFractions( Std );
+#! Q(a1,a2,a3)
+ExportVariables( Q );
 #! [ a1, a2, a3 ]
 x := [[0,1,0],[1,0,0],[0,0,1]];
 #! [ [ 0, 1, 0 ], [ 1, 0, 0 ], [ 0, 0, 1 ] ]
