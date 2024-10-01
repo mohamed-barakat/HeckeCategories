@@ -107,6 +107,7 @@ Dependencies := rec(
                 [ "CAP", ">= 2024.09-05" ],
                 [ "MonoidalCategories", ">= 2023.02-04" ],
                 [ "FreydCategoriesForCAP", ">= 2023.02-01" ],
+                [ "FunctorCategories", ">= 2024.09-11" ],
                 ],
   SuggestedOtherPackages := [ ],
   ExternalConditions := [ ],
