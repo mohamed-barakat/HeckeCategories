@@ -4,19 +4,26 @@
 # Implementations
 #
 
-InstallMethodWithCache( StandardCategory,
-        "for a matrix group and a homalg ring",
-        [ IsMatrixGroup, IsHomalgRing ],
+InstallOtherMethod( GroupoidCategory,
+        "for a presheaf",
+        [ IsObjectInPreSheafCategory ],
         
-  function( W, k )
-    local d, vars_a, R, Q, phi, name, Std, V;
+  function( W )
+    local PSh, W_datum, d, vars_a, k, R, Q, phi, name, GrpCat, V;
     
-    d := Rank( One( W ) );
+    PSh := CapCategory( W );
+    
+    W_datum := ObjectDatum( W );
+    
+    d := ObjectDatum( W_datum[1][1] );
     
     vars_a := Concatenation( "a1..", String( d ) );
     
+    k := CommutativeRingOfLinearCategory( PSh );
     R := k[vars_a];
     Q := HomalgFieldOfRationalsInSingular( vars_a, k );
+    
+    #vars_a := HomalgMatrix( Indeterminates( R ), d, 1, R );
     
     phi :=
       function( w )
@@ -36,33 +43,34 @@ InstallMethodWithCache( StandardCategory,
         name := "W";
     fi;
     
-    name := Concatenation( "StandardCategory( ", name, ", ", RingName( k ), " )" );
+    name := Concatenation( "GroupoidCategory( ", RingName( Q ), ", ", name, " )" );
     
-    Std := CreateCapCategory( name,
-                   IsStandardCategory,
-                   IsObjectInStandardCategory,
-                   IsMorphismInStandardCategory,
-                   IsCapCategoryTwoCell );
+    GrpCat := CreateCapCategory( name,
+                      IsGroupoidCategory,
+                      IsObjectInGroupoidCategory,
+                      IsMorphismInGroupoidCategory,
+                      IsCapCategoryTwoCell );
     
-    SetUnderlyingMatrixGroup( Std, W );
-    SetUnderlyingRing( Std, R );
-    SetUnderlyingFieldOfFractions( Std, Q );
-    SetUnderlyingTwistingRingMap( Std, phi );
+    SetUnderlyingPreSheaf( GrpCat, W );
+    SetUnderlyingMatrixGroup( GrpCat, UnderlyingMatrixGroup( W ) );
+    SetUnderlyingRing( GrpCat, R );
+    SetUnderlyingFieldOfFractions( GrpCat, Q );
+    SetUnderlyingTwistingRingMap( GrpCat, phi );
     
-    Std!.category_as_first_argument := true;
+    GrpCat!.category_as_first_argument := true;
     
     V := CategoryOfRows( R );
     
-    SetIsAbCategory( Std, true );
-    SetIsLinearCategoryOverCommutativeRingWithFinitelyGeneratedFreeExternalHoms( Std, true );
-    SetCommutativeRingOfLinearCategory( Std, Q );
+    SetIsAbCategory( GrpCat, true );
+    SetIsLinearCategoryOverCommutativeRingWithFinitelyGeneratedFreeExternalHoms( GrpCat, true );
+    SetCommutativeRingOfLinearCategory( GrpCat, Q );
     
-    SetRangeCategoryOfHomomorphismStructure( Std, V );
-    SetIsEquippedWithHomomorphismStructure( Std, true );
+    SetRangeCategoryOfHomomorphismStructure( GrpCat, V );
+    SetIsEquippedWithHomomorphismStructure( GrpCat, true );
     
-    SetIsStrictMonoidalCategory( Std, true );
+    SetIsStrictMonoidalCategory( GrpCat, true );
     
-    AddObjectConstructor( Std,
+    AddObjectConstructor( GrpCat,
       function( cat, w )
         
         return CreateCapCategoryObjectWithAttributes( cat,
@@ -70,14 +78,14 @@ InstallMethodWithCache( StandardCategory,
         
     end );
     
-    AddObjectDatum( Std,
+    AddObjectDatum( GrpCat,
       function( cat, obj )
         
         return MatrixGroupElement( obj );
         
     end );
     
-    AddMorphismConstructor( Std,
+    AddMorphismConstructor( GrpCat,
       function( cat, source, ring_element, range )
         local datum;
         
@@ -94,42 +102,42 @@ InstallMethodWithCache( StandardCategory,
         
     end );
     
-    AddMorphismDatum( Std,
+    AddMorphismDatum( GrpCat,
       function( cat, obj )
         
         return UnderlyingRingElement( obj );
         
     end );
     
-    AddIsWellDefinedForObjects( Std,
+    AddIsWellDefinedForObjects( GrpCat,
       function( cat, obj )
         
         return ObjectDatum( cat, obj ) in UnderlyingMatrixGroup( cat );
         
     end );
     
-    AddIsWellDefinedForMorphisms( Std,
+    AddIsWellDefinedForMorphisms( GrpCat,
       function( cat, mor )
         
         return MorphismDatum( cat, mor ) in UnderlyingFieldOfFractions( cat );
         
     end );
     
-    AddIsEqualForObjects( Std,
+    AddIsEqualForObjects( GrpCat,
       function( cat, rx, ry )
         
         return ObjectDatum( cat, rx ) = ObjectDatum( cat, ry );
         
     end );
     
-    AddIsEqualForMorphisms( Std,
+    AddIsEqualForMorphisms( GrpCat,
       function( cat, mor_pre, mor_post )
         
         return MorphismDatum( cat, mor_pre ) = MorphismDatum( cat, mor_post );
         
     end );
     
-    AddIsCongruentForMorphisms( Std,
+    AddIsCongruentForMorphisms( GrpCat,
       function( cat, mor_pre, mor_post )
         
         if IsEndomorphism( cat, mor_pre ) then
@@ -140,7 +148,7 @@ InstallMethodWithCache( StandardCategory,
         
     end );
     
-    AddPreCompose( Std,
+    AddPreCompose( GrpCat,
       function( cat, mor_pre, mor_post )
         
         return MorphismConstructor( cat,
@@ -150,7 +158,7 @@ InstallMethodWithCache( StandardCategory,
         
     end );
     
-    AddIdentityMorphism( Std,
+    AddIdentityMorphism( GrpCat,
       function( cat, rx )
         
         return MorphismConstructor( cat,
@@ -160,7 +168,7 @@ InstallMethodWithCache( StandardCategory,
         
     end );
     
-    AddAdditionForMorphisms( Std,
+    AddAdditionForMorphisms( GrpCat,
       function( cat, mor1, mor2 )
         
         return MorphismConstructor( cat,
@@ -170,7 +178,7 @@ InstallMethodWithCache( StandardCategory,
         
     end );
     
-    AddAdditiveInverseForMorphisms( Std,
+    AddAdditiveInverseForMorphisms( GrpCat,
       function( cat, mor )
         
         return MorphismConstructor( cat,
@@ -180,7 +188,7 @@ InstallMethodWithCache( StandardCategory,
         
     end );
     
-    AddZeroMorphism( Std,
+    AddZeroMorphism( GrpCat,
       function( cat, rx, ry )
         
         return MorphismConstructor( cat,
@@ -190,7 +198,7 @@ InstallMethodWithCache( StandardCategory,
         
     end );
     
-    AddMultiplyWithElementOfCommutativeRingForMorphisms( Std,
+    AddMultiplyWithElementOfCommutativeRingForMorphisms( GrpCat,
       function( cat, f, mor )
         
         return MorphismConstructor( cat,
@@ -200,14 +208,14 @@ InstallMethodWithCache( StandardCategory,
         
     end );
     
-    AddTensorUnit( Std,
+    AddTensorUnit( GrpCat,
       function( cat )
         
         return ObjectConstructor( cat, One( UnderlyingMatrixGroup( cat ) ) );
         
     end );
     
-    AddTensorProductOnObjects( Std,
+    AddTensorProductOnObjects( GrpCat,
       function( cat, rx, ry )
         
         return ObjectConstructor( cat,
@@ -215,7 +223,7 @@ InstallMethodWithCache( StandardCategory,
         
     end );
     
-    AddTensorProductOnMorphisms( Std,
+    AddTensorProductOnMorphisms( GrpCat,
       function( cat, mor1, mor2 )
         local mor2_datum, phi_x, R, Q;
         
@@ -233,7 +241,7 @@ InstallMethodWithCache( StandardCategory,
         
     end );
     
-    AddBasisOfExternalHom( Std,
+    AddBasisOfExternalHom( GrpCat,
       function( cat, rx, ry )
         
         if IsEqualForObjects( cat, rx, ry ) then
@@ -244,7 +252,7 @@ InstallMethodWithCache( StandardCategory,
         
     end );
     
-    AddCoefficientsOfMorphism( Std,
+    AddCoefficientsOfMorphism( GrpCat,
       function( cat, mor )
         
         if IsEqualForObjects( cat, Source( mor ), Range( mor ) ) then
@@ -255,17 +263,64 @@ InstallMethodWithCache( StandardCategory,
         
     end );
     
-    Std!.compiler_hints :=
+    GrpCat!.compiler_hints :=
       rec( category_attribute_names :=
-           [ "UnderlyingMatrixGroup",
+           [ "UnderlyingPreSheaf",
+             "UnderlyingMatrixGroup",
              "UnderlyingRing",
              "UnderlyingFieldOfFractions",
              "UnderlyingTwistingRingMap",
              ] );
     
-    Finalize( Std );
+    Finalize( GrpCat );
     
-    return Std;
+    return GrpCat;
+    
+end );
+
+##
+InstallOtherMethod( GroupoidCategory,
+        "for a homalg ring and a group",
+        [ IsHomalgRing, IsMatrixGroup, IsList, IsList ],
+        
+  function( k, G, symbols, list_of_relations )
+    local S, quiver, F, W, kW, PSh, kmat, Wo, Wg;
+    
+    S := _PrepareInputForPolynomialRing( k, symbols )[2];
+    
+    quiver := [ "q(o)[", JoinStringsWithSeparator( List( S, n -> Concatenation( n, ":o->o" ) ) ), "]" ];
+    quiver := RightQuiver( Concatenation( quiver ) );
+    
+    F := FreeCategory( quiver );
+    
+    W := F / List( list_of_relations, rel -> [ F.(rel), F.o ] );
+    
+    kW := k[W];
+    
+    PSh := PreSheaves( kW );
+
+    kmat := Target( PSh );
+    
+    Wo := [ Rank( One( G ) ) / kmat ];
+    
+    Wg := List( GeneratorsOfMagmaWithInverses( G ), mat -> mat / kmat );
+    
+    W := ObjectConstructor( PSh, Pair( Wo, Wg ) );
+    
+    SetUnderlyingMatrixGroup( W, G );
+    
+    return GroupoidCategory( W );
+    
+end );
+
+##
+InstallOtherMethod( QUO,
+        "for a homalg ring and a group",
+        [ IsMatrix, IsGroupoidCategory ],
+        
+  function( mat, GrpCat )
+    
+    return ObjectConstructor( GrpCat, mat );
     
 end );
 
@@ -277,8 +332,8 @@ end );
 
 ##
 InstallMethod( Display,
-        "for an object in a standard category",
-        [ IsObjectInStandardCategory ],
+        "for an object in a groupoid category",
+        [ IsObjectInGroupoidCategory ],
         
   function( obj )
     
@@ -288,8 +343,8 @@ end );
 
 ##
 InstallMethod( Display,
-        "for a morphism in a standard category",
-        [ IsMorphismInStandardCategory ],
+        "for a morphism in a groupoid category",
+        [ IsMorphismInGroupoidCategory ],
         
   function( obj )
     

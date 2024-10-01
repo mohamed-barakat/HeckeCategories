@@ -4,4 +4,4 @@
 # Reading the implementation part of the package.
 #
 
-ReadPackage( "HeckeCategories", "gap/StandardCategory.gi" );
+ReadPackage( "HeckeCategories", "gap/GroupoidCategory.gi" );

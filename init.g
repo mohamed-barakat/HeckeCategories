@@ -4,4 +4,4 @@
 # Reading the declaration part of the package.
 #
 
-ReadPackage( "HeckeCategories", "gap/StandardCategory.gd" );
+ReadPackage( "HeckeCategories", "gap/GroupoidCategory.gd" );
