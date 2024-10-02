@@ -5,3 +5,4 @@
 #
 
 ReadPackage( "HeckeCategories", "gap/GroupoidCategory.gd" );
+#ReadPackage( "HeckeCategories", "gap/StandardCategory.gd" );

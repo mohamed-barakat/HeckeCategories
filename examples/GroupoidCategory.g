@@ -3,16 +3,14 @@
 #! @Example
 LoadPackage( "HeckeCategories", false );
 #! true
-
-
-W := Group( [[0,1,0],[1,0,0],[0,0,1]], [[1,0,0],[0,0,1],[0,1,0]] );
+G := Group( [[0,1,0],[1,0,0],[0,0,1]], [[1,0,0],[0,0,1],[0,1,0]] );
 #! Group([ [ [ 0, 1, 0 ], [ 1, 0, 0 ], [ 0, 0, 1 ] ],
 #!         [ [ 1, 0, 0 ], [ 0, 0, 1 ], [ 0, 1, 0 ] ] ])
 k := HomalgFieldOfRationalsInSingular( );
 #! Q
-GrpCat := GroupoidCategory( k, W, "s,t", [ "ss", "tt", "ststst" ] );
+GrpdCat := GroupoidCategory( k, G, "s,t", [ "ss", "tt", "ststst" ] );
 #! GroupoidCategory( Q(a1,a2,a3), W )
-Display( GrpCat );
+Display( GrpdCat );
 #! A CAP category with name GroupoidCategory( Q(a1,a2,a3), W ):
 #! 
 #! 20 primitive operations were used to derive 78 operations for this category
@@ -22,36 +20,27 @@ Display( GrpCat );
 #! * IsMonoidalCategory
 #! and furthermore mathematically
 #! * IsStrictMonoidalCategory
-Q := UnderlyingFieldOfFractions( GrpCat );
+Q := CommutativeRingOfLinearCategory( GrpdCat );
 #! Q(a1,a2,a3)
 ExportVariables( Q );
 #! [ a1, a2, a3 ]
-x := [[0,1,0],[1,0,0],[0,0,1]];
-#! [ [ 0, 1, 0 ], [ 1, 0, 0 ], [ 0, 0, 1 ] ]
-rx := x / GrpCat;
+kW := UnderlyingGroupAlgebra( GrpdCat );
+#! Algebra( Q, FreeCategory( RightQuiver( "q(o)[s:o->o,t:o->o]" ) ) )
+#! / relations
+rx := kW.s / GrpdCat;
 #! <An object in GroupoidCategory( Q(a1,a2,a3), W )>
 IsWellDefined( rx );
 #! true
 Display( rx );
-#! [ [ 0, 1, 0 ],
-#!   [ 1, 0, 0 ],
-#!   [ 0, 0, 1 ] ]
-y := [[1,0,0],[0,0,1],[0,1,0]];
-#! [ [ 1, 0, 0 ], [ 0, 0, 1 ], [ 0, 1, 0 ] ]
-ry := y / GrpCat;
+#! (o)-[{ 1*(s) }]->(o)
+ry := kW.t / GrpdCat;
 #! <An object in GroupoidCategory( Q(a1,a2,a3), W )>
 rx = ry;
-#! false
-z := [ [ 0, 1, 0 ], [ 1, 0, 0 ], [ 0, 0, 2 ] ];
-#! [ [ 0, 1, 0 ], [ 1, 0, 0 ], [ 0, 0, 2 ] ]
-IsWellDefined( z / GrpCat );
 #! false
 rxy := TensorProduct( rx, ry );
 #! <An object in GroupoidCategory( Q(a1,a2,a3), W )>
 Display( rxy );
-#! [ [  0,  0,  1 ],
-#!   [  1,  0,  0 ],
-#!   [  0,  1,  0 ] ]
+#! (o)-[{ 1*(s*t) }]->(o)
 id_x := IdentityMorphism( rx );
 #! <An identity morphism in GroupoidCategory( Q(a1,a2,a3), W )>
 Display( id_x );
@@ -106,12 +95,10 @@ BasisOfExternalHom( rx, ry );
 #! [ ]
 CoefficientsOfMorphism( zeta_xy );
 #! [ ]
-I := TensorUnit( GrpCat );
+I := TensorUnit( GrpdCat );
 #! <An object in GroupoidCategory( Q(a1,a2,a3), W )>
 Display( I );
-#! [ [ 1, 0, 0 ],
-#!   [ 0, 1, 0 ],
-#!   [ 0, 0, 1 ] ]
+#! (o)-[{ 1*(o) }]->(o)
 chi_xy := TensorProduct( phi_x, phi_y );
 #! <A morphism in GroupoidCategory( Q(a1,a2,a3), W )>
 Display( chi_xy );
