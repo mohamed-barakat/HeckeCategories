@@ -45,6 +45,9 @@ DeclareOperation( "GroupoidCategory",
        [ IsGroup, IsHomalgRing ] );
 #! @InsertChunk GroupoidCategory
 
+DeclareAttribute( "GroupoidCategory",
+       IsObjectInPreSheafCategory );
+
 ####################################
 #
 #! @Section Attributes
@@ -56,15 +59,19 @@ DeclareAttribute( "UnderlyingPreSheaf",
         IsGroupoidCategory );
 
 #!
+DeclareAttribute( "UnderlyingGroupAlgebra",
+        IsGroupoidCategory );
+
+#!
+DeclareAttribute( "UnderlyingGroup",
+        IsGroupoidCategory );
+
+#!
 DeclareAttribute( "UnderlyingMatrixGroup",
         IsGroupoidCategory );
 
 #!
 DeclareAttribute( "UnderlyingRing",
-        IsGroupoidCategory );
-
-#!
-DeclareAttribute( "UnderlyingFieldOfFractions",
         IsGroupoidCategory );
 
 CapJitAddTypeSignature( "UnderlyingRing", [ IsGroupoidCategory ], IsHomalgRing );
@@ -76,10 +83,8 @@ DeclareAttribute( "UnderlyingTwistingRingMap",
 CapJitAddTypeSignature( "UnderlyingTwistingRingMap", [ IsGroupoidCategory ], IsHomalgRingMap );
 
 #!
-DeclareAttribute( "MatrixGroupElement",
+DeclareAttribute( "GroupElement",
         IsObjectInGroupoidCategory );
-
-CapJitAddTypeSignature( "MatrixGroupElement", [ IsObjectInGroupoidCategory ], IsMatrixGroup );
 
 #!
 DeclareAttribute( "UnderlyingRingElement",
