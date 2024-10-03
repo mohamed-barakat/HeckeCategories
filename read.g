@@ -5,4 +5,4 @@
 #
 
 ReadPackage( "HeckeCategories", "gap/GroupoidCategory.gi" );
-#ReadPackage( "HeckeCategories", "gap/StandardCategory.gi" );
+ReadPackage( "HeckeCategories", "gap/StandardCategoryOfRows.gi" );
