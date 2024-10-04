@@ -32,25 +32,25 @@ ExportVariables( Q );
 kW := UnderlyingGroupAlgebra( GrpdCat );
 #! Algebra( Q, FreeCategory( RightQuiver( "q(o)[s:o->o,t:o->o]" ) ) )
 #! / relations
-rx := kW.s / GrpdCat;
+rs := kW.s / GrpdCat;
 #! <An object in GroupoidCategory( Q(a1,a2), W )>
-IsWellDefined( rx );
+IsWellDefined( rs );
 #! true
-Display( rx );
+Display( rs );
 #! (o)-[{ 1*(s) }]->(o)
-ry := kW.t / GrpdCat;
+rt := kW.t / GrpdCat;
 #! <An object in GroupoidCategory( Q(a1,a2), W )>
-rx = ry;
+rs = rt;
 #! false
-rxy := TensorProduct( rx, ry );
+rsy := TensorProduct( rs, rt );
 #! <An object in GroupoidCategory( Q(a1,a2), W )>
-Display( rxy );
+Display( rsy );
 #! (o)-[{ 1*(s*t) }]->(o)
-id_x := IdentityMorphism( rx );
+id_x := IdentityMorphism( rs );
 #! <An identity morphism in GroupoidCategory( Q(a1,a2), W )>
 Display( id_x );
 #! 1
-phi_x := MorphismConstructor( rx, a1 * a2, rx );
+phi_x := MorphismConstructor( rs, a1 * a2, rs );
 #! <A morphism in GroupoidCategory( Q(a1,a2), W )>
 IsWellDefined( phi_x );
 #! true
@@ -62,7 +62,7 @@ Display( 2 * a1 * phi_x );
 #! (2*a1^2*a2)
 Display( -phi_x );
 #! (-a1*a2)
-psi_x := MorphismConstructor( rx, a2 * a1, rx );
+psi_x := MorphismConstructor( rs, a2 * a1, rs );
 #! <A morphism in GroupoidCategory( Q(a1,a2), W )>
 phi_x = psi_x;
 #! true
@@ -70,42 +70,40 @@ Display( phi_x - psi_x );
 #! 0
 Display( PreCompose( phi_x, psi_x ) );
 #! (a1^2*a2^2)
-phi_y := MorphismConstructor( ry, a2 * (a1-a2), ry );
+phi_y := MorphismConstructor( rt, a2 * (a1-a2), rt );
 #! <A morphism in GroupoidCategory( Q(a1,a2), W )>
 phi_x = phi_y;
 #! false
-zero_xy := ZeroMorphism( rx, ry );
+zero_st := ZeroMorphism( rs, rt );
 #! <A zero morphism in GroupoidCategory( Q(a1,a2), W )>
-Display( zero_xy );
+Display( zero_st );
 #! 0
-zeta_xy := MorphismConstructor( rx, a1 * a2, ry );
+zeta_st := MorphismConstructor( rs, a1 * a2, rt );
 #! <A morphism in GroupoidCategory( Q(a1,a2), W )>
-IsZero( zeta_xy );
+IsZero( zeta_st );
 #! true
-IsEqualForMorphisms( zero_xy, zeta_xy );
-#! true
-IsCongruentForMorphisms( zero_xy, zeta_xy );
-#! true
+IsWellDefined( zeta_st );
+#! false
 eta_x := (a1-a2) * phi_x;
 #! <A morphism in GroupoidCategory( Q(a1,a2), W )>
 Display( eta_x );
 #! (a1^2*a2-a1*a2^2)
-end_x := BasisOfExternalHom( rx, rx );
+end_x := BasisOfExternalHom( rs, rs );
 #! [ <An identity morphism in GroupoidCategory( Q(a1,a2), W )> ]
 Display( end_x[1] );
 #! 1
 CoefficientsOfMorphism( eta_x );
 #! [ (a1^2*a2-a1*a2^2) ]
-BasisOfExternalHom( rx, ry );
+BasisOfExternalHom( rs, rt );
 #! [ ]
-CoefficientsOfMorphism( zeta_xy );
+CoefficientsOfMorphism( zeta_st );
 #! [ ]
 I := TensorUnit( GrpdCat );
 #! <An object in GroupoidCategory( Q(a1,a2), W )>
 Display( I );
 #! (o)-[{ 1*(o) }]->(o)
-chi_xy := TensorProduct( phi_x, phi_y );
+chi_st := TensorProduct( phi_x, phi_y );
 #! <A morphism in GroupoidCategory( Q(a1,a2), W )>
-Display( chi_xy );
+Display( chi_st );
 #! (-a1^2*a2^2)
 #! @EndExample
