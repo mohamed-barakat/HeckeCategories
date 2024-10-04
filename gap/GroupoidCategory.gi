@@ -86,18 +86,11 @@ InstallMethod( GroupoidCategory,
     
     AddMorphismConstructor( GrpdCat,
       function( GrpdCat, source, ring_element, range )
-        local datum;
-        
-        if IsEqualForObjects( GrpdCat, source, range ) then
-            datum := ring_element;
-        else
-            datum := Zero( ring_element );
-        fi;
         
         return CreateCapCategoryMorphismWithAttributes( GrpdCat,
                        source,
                        range,
-                       UnderlyingRingElement, datum );
+                       UnderlyingRingElement, ring_element );
         
     end );
     
@@ -118,8 +111,17 @@ InstallMethod( GroupoidCategory,
     
     AddIsWellDefinedForMorphisms( GrpdCat,
       function( GrpdCat, mor )
+        local ring_element, bool;
         
-        return MorphismDatum( GrpdCat, mor ) in CommutativeRingOfLinearCategory( GrpdCat );
+        ring_element := MorphismDatum( GrpdCat, mor );
+        
+        bool := ring_element in CommutativeRingOfLinearCategory( GrpdCat );
+        
+        if IsEqualForObjects( GrpdCat, Source( mor ), Target( mor ) ) then
+            return bool;
+        fi;
+        
+        return bool and IsZero( ring_element );
         
     end );
     

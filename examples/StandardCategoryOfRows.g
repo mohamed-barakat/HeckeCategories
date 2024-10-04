@@ -58,7 +58,7 @@ source_psi := DirectSum( [ t, s ] );
 target_psi := DirectSum( [ s, st ] );
 #! <An object in StandardCategoryOfRows( Q(a1,a2,a3), W )>
 matrix_psi := HomalgMatrixListList( [ [ 0, 0 ], [ a1 + a3, 0 ] ], 2, 2, Q );
-#! <A 3 x 2 matrix over an external ring>
+#! <A 2 x 2 matrix over an external ring>
 psi := MorphismConstructor( source_psi, matrix_psi, target_psi );
 #! <A morphism in StandardCategoryOfRows( Q(a1,a2,a3), W )>
 IsWellDefined( psi );
