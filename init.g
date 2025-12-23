@@ -7,3 +7,4 @@
 ReadPackage( "HeckeCategories", "gap/GroupoidCategory.gd" );
 ReadPackage( "HeckeCategories", "gap/StandardCategoryOfRows.gd" );
 ReadPackage( "HeckeCategories", "gap/StandardCategoryOfColumns.gd" );
+ReadPackage( "HeckeCategories", "gap/FreeBottSamelsonCategory.gd" );
