@@ -105,7 +105,7 @@ Dependencies := rec(
   NeededOtherPackages := [
                 [ "RingsForHomalg", ">= 2023.02-02" ],
                 [ "CAP", ">= 2026.04-01" ],
-                [ "MonoidalCategories", ">= 2023.02-04" ],
+                [ "MonoidalCategories", ">= 2026.05-01" ],
                 [ "FreydCategoriesForCAP", ">= 2026.04-01" ],
                 ],
   SuggestedOtherPackages := [ ],
